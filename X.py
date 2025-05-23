@@ -3,6 +3,14 @@ from PIL import Image
 from io import BytesIO
 from datetime import datetime
 
+#CSSファイルの読み込み
+def local_css(fname):
+    with open(fname) as f:
+        css=f.read()
+        st.markdown(f"<style>{css}</style>",unsafe_allow_html=True)
+
+local_css("form.css")
+
 if 'posts' not in st.session_state:
     st.session_state.posts=[]
 
@@ -32,9 +40,10 @@ if submitted:
 
 
 for post in reversed(st.session_state.posts): #新しい順で表示
-    if post['text']:
-        st.text_area('投稿内容',post['text'],height=100)
+    if post["text"]:
+        st.text("投稿内容")
+        st.markdown(f'<div class="post_text">{post["text"]}</div>',unsafe_allow_html=True)
     if post['image']:
         image=Image.open(BytesIO(post['image']))
         st.image(image,caption='投稿画像',use_column_width=True)
-    st.markdown(f"🕒 {post['time']}")
+    st.markdown(f'<div class="timestamp">🕒 {post["time"]}</div>',unsafe_allow_html=True)

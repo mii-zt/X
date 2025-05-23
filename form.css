@@ -1,0 +1,12 @@
+.timestamp {
+    color: #888;
+    font-size: 14px;
+    text-align: right;
+    margin-top: 10px;
+}
+.post_text{
+    background-color: #f0f2f6;
+    padding:10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
