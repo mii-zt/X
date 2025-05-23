@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 from io import BytesIO
+from datetime import datetime
 
 if 'posts' not in st.session_state:
     st.session_state.posts=[]
@@ -22,7 +23,8 @@ if submitted:
             image=st.session_state.post_image.getvalue()
         st.session_state.posts.append({ #同一のリストに文字と画像を保存
             'text':st.session_state.post_text,
-            'image':image
+            'image':image,
+            'time':datetime.now().strftime('%Y-%m-%d %H:%M:%S') #投稿時間の記録
             })
 
     else:
@@ -30,7 +32,9 @@ if submitted:
 
 
 for post in reversed(st.session_state.posts): #新しい順で表示
+    
     st.text_area('投稿内容',post['text'],height=100)
     if post['image']:
         image=Image.open(BytesIO(post['image']))
         st.image(image,caption='投稿画像',use_column_width=True)
+    st.markdown(f"🕒 {post['time']}")
